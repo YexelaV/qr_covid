@@ -1,4 +1,4 @@
-# qr_covid
+# your.qr.code
 
 A new Flutter project.
 
