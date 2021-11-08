@@ -1,4 +1,4 @@
-package qr.code.covid
+package your.qr.code
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -24,7 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  bloc: ^7.2.1
   dotted_border: ^2.0.0+1
+  flutter_bloc: ^7.3.1
   flutter_qr_reader:
     path: flutter_qr_reader
   image_picker: ^0.8.4+1
