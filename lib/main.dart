@@ -27,6 +27,13 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Center(
+              child: Text(
+            "Ваш QR-код вакцинации",
+            style: TextStyle(color: Colors.black),
+          ))),
       body: Center(
         child: BlocBuilder<AppCubit, AppState>(
             bloc: appCubit,
@@ -115,7 +122,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                     if (data != null)
                       TextButton(
                           child: Text(
-                            "Открыть",
+                            "Открыть сертификат",
                             style: TextStyle(fontSize: 20),
                           ),
                           onPressed: () async {
