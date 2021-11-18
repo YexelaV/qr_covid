@@ -6,7 +6,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'bloc/app_cubit.dart';
 
-void main() => runApp(MaterialApp(home: App()));
+void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: App(),
+    ));
 
 class App extends StatefulWidget {
   @override

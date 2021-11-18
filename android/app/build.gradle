@@ -52,8 +52,8 @@ android {
         applicationId "your.qr.code"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 11
-        versionName '1.0.2'
+        versionCode 12
+        versionName '1.0.3'
     }
 
        signingConfigs {
