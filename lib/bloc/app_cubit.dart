@@ -7,35 +7,50 @@ import 'package:image_picker/image_picker.dart';
 
 part 'app_state.dart';
 
+const qrFilename = 'image.png';
+const documentFilename = 'document.png';
+
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
 
+  File image;
+  File document;
+  String link;
+
   Future<void> loadFromCache() async {
     emit(AppLoading());
-    final image = await loadImage();
+    image = await loadImage(qrFilename);
+    document = await loadImage(documentFilename);
     var link;
     if (image != null) {
       link = await FlutterQrReader.imgScan(image.path);
     }
-    emit(AppReady(image: image, link: link));
+    emit(AppReady(image: image, document: document, link: link));
   }
 
-  Future<String> get _localPath async {
+  Future<String> getPath(String filename) async {
     final directory = await getApplicationDocumentsDirectory();
-    return '${directory.path}/image.png';
+    return '${directory.path}/$filename';
   }
 
-  Future<void> loadFromGallery() async {
+  Future<void> loadFromGallery(String filename) async {
     final _image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    final image = File(_image.path);
-    await image.copy(await _localPath);
-    final link = await FlutterQrReader.imgScan(image.path);
-    emit(AppReady(image: image, link: link));
+    if (_image != null) {
+      final result = File(_image.path);
+      await result.copy(await getPath(filename));
+      if (filename == qrFilename) {
+        image = result;
+        link = await FlutterQrReader.imgScan(result.path);
+      } else {
+        document = result;
+      }
+      emit(AppReady(image: image, document: document, link: link));
+    }
   }
 
-  Future<File> loadImage() async {
+  Future<File> loadImage(String filename) async {
     try {
-      final path = await _localPath;
+      final path = await getPath(filename);
       final file = File(path);
       if (await file.exists()) {
         return file;
@@ -44,12 +59,17 @@ class AppCubit extends Cubit<AppState> {
     return null;
   }
 
-  Future<void> deleteImage() async {
-    final path = await _localPath;
-    final file = File(path);
+  Future<void> deleteImage(String filename) async {
+    final file = File(await getPath(filename));
     if (await file.exists()) {
       await file.delete();
     }
-    emit(AppReady());
+    if (filename == qrFilename) {
+      image = null;
+      link = null;
+    } else {
+      document = null;
+    }
+    emit(AppReady(image: image, document: document, link: link));
   }
 }

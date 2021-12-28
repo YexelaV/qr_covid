@@ -50,10 +50,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "your.qr.code"
-        minSdkVersion 16
+        minSdkVersion 24
         targetSdkVersion 30
-        versionCode 12
-        versionName '1.0.3'
+        versionCode 14
+        versionName '1.1'
     }
 
        signingConfigs {
